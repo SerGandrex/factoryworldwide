@@ -3,6 +3,9 @@
 {% block content %}
     <div class="container">
       <br/>
+        <br/>
+        {{ utils.flashed_messages() }}
+        <br/>
       <div class="center">
           <table class="table table-bordered" style="width:100%">
               <tr>
@@ -96,7 +99,8 @@
             cache: false,
             dataType: "json",
             success: function(returndata){
-                console.log(returndata)
+                console.log(returndata);
+                location.reload();
             }
         });
 

@@ -1,5 +1,5 @@
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
-from flask import render_template, Blueprint, flash, request
+from flask import render_template, Blueprint, flash, request, redirect, url_for
 from factoryworldwide_app.forms.Forms import CreateRecipeForm, CreateIngredientForm, \
     SearchRecipeForm
 from factoryworldwide_app.services.RateService import RateService
@@ -29,6 +29,7 @@ def create_recipe():
 
         RecipeService.create_recipe(data)
         flash('Recipe created successfully.')
+        return redirect(url_for('web.create_recipe'))
 
     return render_template('recipe/create-recipe.html', form=form, title='Recipe')
 
@@ -77,6 +78,7 @@ def create_ingredient():
         data = request.form.to_dict()
         IngredientService.create_ingredient(data)
         flash('Ingredient created successfully.')
+        return redirect(url_for('web.create_ingredient'))
 
     return render_template('ingredient/create-ingredient.html', form=form, title='Ingredient')
 
@@ -97,7 +99,10 @@ def rate_recipe():
     data['email'] = get_jwt_identity()
     if data.get('rating').isdigit() and int(data.get('rating')) in range(1, 6):
         RateService.rate_recipe(data)
+        flash('Successfully rated recipe.')
         return {'status': '200'}
+
+    flash('Rate not valid.')
     return {'status': '400'}
 
 
