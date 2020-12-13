@@ -7,4 +7,4 @@ app.register_blueprint(auth)
 
 
 if __name__ == "__main__":
-    app.run(threaded=True, debug=True)
+    app.run(host='0.0.0.0', threaded=True, debug=True)

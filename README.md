@@ -45,14 +45,14 @@ Docker
 
 Pull image from docker hub and run:
 
-- docker pull sergandrex/factoryworldwide:1.0
-- docker run -p 5000:5000 sergandrex/factoryworldwide:1.0
+- docker pull sergandrex/factoryworldwide:1.0.1
+- docker run -p 5000:5000 sergandrex/factoryworldwide:1.0.1
 
 Docker build image from Dockerfile:
 
 - cd factoryworldwide
-- docker build -t factoryworldwide:1.0 .
-- docker run -p 5000:5000 factoryworldwide:1.0
+- docker build -t factoryworldwide:1.0.1 .
+- docker run -p 5000:5000 factoryworldwide:1.0.1
 
 
 
