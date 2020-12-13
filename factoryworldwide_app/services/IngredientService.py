@@ -21,7 +21,7 @@ class IngredientService:
     @classmethod
     def get_most_used_ingredients(cls):
         ingredients = db.session.query(cls.model.id, cls.model.name, func.count(Recipe.id).label('ingredient_usage'))\
-            .join(cls.model.recipes)\
+            .outerjoin(cls.model.recipes)\
             .group_by(cls.model.id) \
             .order_by(desc(func.count(Recipe.id))) \
             .limit(5)\

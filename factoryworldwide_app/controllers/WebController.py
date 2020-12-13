@@ -1,5 +1,5 @@
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
-from flask import render_template, Blueprint, flash, request, redirect, url_for
+from flask import render_template, Blueprint, flash, request, redirect, url_for, session
 from factoryworldwide_app.forms.Forms import CreateRecipeForm, CreateIngredientForm, \
     SearchRecipeForm
 from factoryworldwide_app.services.RateService import RateService

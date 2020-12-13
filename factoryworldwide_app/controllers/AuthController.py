@@ -1,4 +1,5 @@
-from flask_jwt_extended import JWTManager, create_access_token, set_access_cookies, unset_access_cookies
+from flask_jwt_extended import JWTManager, create_access_token, set_access_cookies, unset_access_cookies, \
+    jwt_refresh_token_required
 from flask import render_template, Blueprint, redirect, url_for, flash, request, make_response
 from factoryworldwide_app.forms.Forms import RegistrationForm, LoginForm
 
@@ -10,10 +11,21 @@ jwt = JWTManager(app)
 
 
 @jwt.unauthorized_loader
-def my_expired_token_callback(expired_token):
-    flash('Missing access token cookie, you need to login in')
+def my_exipired_token_callback(expired_token):
+    flash('Valid token needed')
+    return redirect(url_for('auth.logout'))
 
-    return redirect(url_for('auth.login'))
+
+@jwt.expired_token_loader
+def my_expired_token_callback(expired_token):
+    flash('Valid token needed')
+    return redirect(url_for('auth.logout'))
+
+
+@jwt.invalid_token_loader
+def my_invalid_token_callback(invalid_token):
+    flash('Valid token needed')
+    return redirect(url_for('auth.logout'))
 
 
 @auth.route('/register', methods=['GET', 'POST'])

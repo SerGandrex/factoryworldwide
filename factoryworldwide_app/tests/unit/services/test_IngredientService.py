@@ -21,7 +21,7 @@ class IngredientServiceTestCase(unittest.TestCase):
         count_mock.return_value = Mock()
         count_mock.return_value.label.return_value = 'label'
 
-        query_mock.return_value.join.return_value.group_by.return_value.order_by.return_value.limit.return_value\
+        query_mock.return_value.outerjoin.return_value.group_by.return_value.order_by.return_value.limit.return_value\
             .all.return_value = ['Ingredient']
         self.assertEqual(IngredientService.get_most_used_ingredients(), ['Ingredient'])
 

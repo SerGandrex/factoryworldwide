@@ -15,9 +15,9 @@ class User:
     location: Any = None
     bio: Any = None
     site: Any = None
-    facebook: Any = None
-    twitter: Any = None
-    git: Any = None
+    facebook_handle: Any = None
+    twitter_handle: Any = None
+    github_handle: Any = None
     password_hash: Any = None
 
     def verify_password(self, password):
@@ -47,16 +47,16 @@ class UserServiceTestCase(unittest.TestCase):
     def test_create_user_additional_info(self):
         expected = User(email='some_email@test.com', first_name='some_first_name', last_name='some_last_name',
                         password='so_secret_password', location='some_location', bio='some_bio', site='some_site',
-                        facebook='some_facebook', twitter='some_twitter', git='some_git')
+                        facebook_handle='some_facebook', twitter_handle='some_twitter', github_handle='some_git')
         UserService.model = Mock()
         actual = UserService.create_user(
             {'email': 'some_email@test.com', 'first_name': 'some_first_name', 'last_name': 'some_last_name',
              'password': 'so_secret_password', 'location': 'some_location', 'bio': 'some_bio', 'site': 'some_site',
-             'facebook': {'handle': 'some_facebook'}, 'twitter': {'handle': 'some_twitter'},
-             'github': {'handle': 'some_git'}})
+             'facebook_handle': {'handle': 'some_facebook'}, 'twitter_handle': {'handle': 'some_twitter'},
+             'github_handle': {'handle': 'some_git'}})
 
         self._assert_data(actual, expected, 'email', 'first_name', 'last_name', 'password', 'location', 'bio', 'site',
-                          'facebook', 'twitter', 'git')
+                          'facebook_handle', 'twitter_handle', 'github_handle')
         UserService.model.assert_has_calls(calls=[call().save()])
 
     def test_login(self):
