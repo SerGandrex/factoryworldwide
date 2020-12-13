@@ -1,7 +1,7 @@
 # factoryworldwide
 Repository for factoryworldwide assignment
 
-Instalation:
+Installation:
 
 - $ pip install virtualenv
 - $ cd factoryworldwide
@@ -40,3 +40,19 @@ Endpoints:
 - Get 5 most used ingredients: http://127.0.0.1:5000/get-ingredients [GET]
 - Get user profile: http://127.0.0.1:5000/get-user-profile [GET]
 - Rate recipe: http://127.0.0.1:5000/rate-recipe [POST]
+
+Docker
+
+Pull image from docker hub and run:
+
+- docker pull sergandrex/factoryworldwide:1.0
+- docker run -p 5000:5000 sergandrex/factoryworldwide:1.0
+
+Docker build image from Dockerfile:
+
+- cd factoryworldwide
+- docker build -t factoryworldwide:1.0 .
+- docker run -p 5000:5000 factoryworldwide:1.0
+
+
+
