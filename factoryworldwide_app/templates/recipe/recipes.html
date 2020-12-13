@@ -1,0 +1,104 @@
+{% include 'base.html' %}
+{% import "bootstrap/utils.html" as utils %}
+{% block content %}
+    <div class="container">
+      <br/>
+      <div class="center">
+          <table class="table table-bordered" style="width:100%">
+              <tr>
+                  <th>recipe id</th>
+                  <th>recipe name</th>
+                  <th>recipe text</th>
+                  <th>recipe rating</th>
+                  {% if ingredient_count %}
+                     <th>ingredient count</th>
+                  {% endif %}
+                  <th>rate recipe</th>
+              </tr>
+              {% for recipe in recipes.items %}
+              <tr>
+                  <td class="btn_{{loop.index}}_id">{{ recipe.id }}</td>
+                  <td>
+                      <a href="{{ url_for('web.get_recipe', recipe_id=recipe.id) }}">{{ recipe.name }}</a>
+                  </td>
+                  <td>{{ recipe.recipe_text }}</td>
+                  <td>{{ recipe.rating }}</td>
+                  {% if recipe.ingredient_count %}
+                    <td>{{ recipe.ingredient_count }}</td>
+                  {% endif %}
+                  <td>
+                      {% if user and recipe.user_id != user.id %}
+                        <input type="number" class="btn_{{loop.index}}_rating" min="1" max="5">
+                        <button class="btns" id="btn_{{loop.index}}">Rate</button>
+                      {% endif %}
+                  </td>
+
+              </tr>
+              {% endfor %}
+          </table>
+      </div>
+    </div>
+    <div class="text-center">
+        <a href="{{ url_for(request.endpoint, indicator=indicator if indicator else None, page=recipes.prev_num) }}"
+           class="btn btn-outline-dark
+           {% if recipes.page == 1 %}disabled{% endif %}">
+            &laquo;
+        </a>
+        {% for page_num in recipes.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+                {% if recipes.page == page_num %}
+                <a href="{{ url_for(request.endpoint, indicator=indicator if indicator else None, page=page_num) }}"
+                   class="btn btn-dark">
+                    {{ page_num }}
+                </a>
+                {% else %}
+                <a href="{{ url_for(request.endpoint, indicator=indicator if indicator else None, page=page_num) }}"
+                   class="btn btn-outline-dark">
+                    {{ page_num }}
+                </a>
+                {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+        {% endfor %}
+        <a href="{{ url_for(request.endpoint, indicator=indicator if indicator else None, page=recipes.next_num) }}"
+           class="btn btn-outline-dark
+           {% if recipes.page == recipes.pages %}disabled{% endif %}">
+            &raquo;
+        </a>
+         <p>
+            Showing page {{ recipes.page }} of {{ recipes.pages }}
+        </p>
+    </div>
+
+
+{% endblock %}
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script>
+    $(document).on("click",".btns", function (e) {
+    var btn_id = $(this).attr("id");
+    console.log(btn_id);
+
+    var recipe_id = $("." + btn_id + "_id").text();
+    var rating = $("." + btn_id + "_rating").val();
+
+    var recipe_data = {
+        recipe_id: recipe_id,
+        rating: rating
+    };
+    console.log(recipe_data);
+        $.ajax({
+            type: 'post',
+            url: window.location.origin + '/rate-recipe',
+            data: JSON.stringify(recipe_data),
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            dataType: "json",
+            success: function(returndata){
+                console.log(returndata)
+            }
+        });
+
+});
+</script>

@@ -1,0 +1,33 @@
+{% include 'base.html' %}
+{% import "bootstrap/utils.html" as utils %}
+{% block content %}
+    <div class="container">
+      <br/>
+      <div class="center">
+          <table class="table table-bordered" style="width:100%">
+              <tr>
+                  <th>email</th>
+                  <th>first_name</th>
+                  <th>last name</th>
+                  <th>bio</th>
+                  <th>site</th>
+                  <th>facebook</th>
+                  <th>twitter</th>
+                  <th>git</th>
+                  <th></th>
+              </tr>
+              <tr>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.first_name }}</td>
+                  <td>{{ user.last_name }}</td>
+                  <td>{{ user.location }}</td>
+                  <td>{{ user.bio }}</td>
+                  <td>{{ user.site }}</td>
+                  <td>{{ user.facebook }}</td>
+                  <td>{{ user.twitter }}</td>
+                  <td>{{ user.git }}</td>
+              </tr>
+          </table>
+      </div>
+    </div>
+{% endblock %}

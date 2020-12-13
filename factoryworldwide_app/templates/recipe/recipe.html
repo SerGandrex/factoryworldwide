@@ -1,0 +1,33 @@
+{% include 'base.html' %}
+{% import "bootstrap/utils.html" as utils %}
+{% block content %}
+    <div class="container">
+      <br/>
+      <div class="center">
+          <table class="table table-bordered" style="width:100%">
+              <tr>
+                  <th>recipe id</th>
+                  <th>recipe name</th>
+                  <th>recipe text</th>
+                  <th>recipe rating</th>
+                  <th>recipe ingredients</th>
+              </tr>
+              <tr>
+                  <td>{{ recipe.id }}</td>
+                  <td>{{ recipe.name }}</td>
+                  <td>{{ recipe.recipe_text }}</td>
+                  <td>{{ recipe.rating }}</td>
+                  <td>
+                      <table>
+                          {% for ingredient in recipe.ingredients %}
+                          <tr>
+                            <td>{{ ingredient.name }}</td>
+                          </tr>
+                          {% endfor %}
+                      </table>
+                  </td>
+              </tr>
+          </table>
+      </div>
+    </div>
+{% endblock %}

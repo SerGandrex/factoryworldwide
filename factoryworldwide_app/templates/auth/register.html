@@ -1,0 +1,15 @@
+{% include "base.html" %}
+{% import "bootstrap/utils.html" as utils %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+<div class="container" style="width: 50%">
+  <br/>
+    {{ utils.flashed_messages() }}
+  <br/>
+  <div class="center">
+    <h1>Register for an account</h1>
+    <br/>
+    {{ wtf.quick_form(form) }}
+  </div>
+</div>
+{% endblock %}
