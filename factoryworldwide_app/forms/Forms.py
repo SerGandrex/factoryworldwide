@@ -4,6 +4,7 @@ from wtforms.validators import DataRequired, Email, EqualTo
 
 from factoryworldwide_app.models.UserModel import User
 from factoryworldwide_app.models.IngredientModel import Ingredient
+from factoryworldwide_app.models.RecipeModel import Recipe
 from factoryworldwide_app.server import hunter
 
 
@@ -36,6 +37,10 @@ class CreateIngredientForm(FlaskForm):
     name = StringField('Ingredient Name', validators=[DataRequired()])
     create = SubmitField('Create')
 
+    def validate_name(self, field):
+        if Ingredient.query.filter_by(name=field.data).first():
+            raise ValidationError('Name is already in use.')
+
 
 class RecipeForm(FlaskForm):
     name = StringField('Recipe Name', validators=[DataRequired()])
@@ -43,6 +48,14 @@ class RecipeForm(FlaskForm):
     ingredients = SelectMultipleField('Ingredient', validators=[DataRequired()],
                                       choices=[(ingredient.id, ingredient.name) for ingredient in Ingredient().list()],
                                       coerce=int)
+
+    def validate_name(self, field):
+        if Recipe.query.filter_by(name=field.data).first():
+            raise ValidationError('Name is already in use.')
+
+    def __init__(self, *args, **kwargs):
+        form = super(RecipeForm, self).__init__(*args, **kwargs)
+        self.ingredients.choices = [(ingredient.id, ingredient.name) for ingredient in Ingredient().list()]
 
 
 class CreateRecipeForm(RecipeForm):
