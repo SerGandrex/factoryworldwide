@@ -20,9 +20,9 @@ class UserService:
             user.location = additional_info['location']
             user.bio = additional_info['bio']
             user.site = additional_info['site']
-            user.facebook = additional_info['facebook']['handle']
-            user.twitter = additional_info['twitter']['handle']
-            user.git = additional_info['github']['handle']
+            user.facebook_handle = additional_info['facebook']['handle']
+            user.twitter_handle = additional_info['twitter']['handle']
+            user.github_handle = additional_info['github']['handle']
         user.save()
         return user
 

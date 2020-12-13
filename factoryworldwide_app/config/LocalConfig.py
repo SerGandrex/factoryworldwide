@@ -6,7 +6,7 @@ SECRET_KEY = 'p9Bv<3Eid9%$i01'
 EMAILHUNTER_API_KEY = '438b7edcca5e91160ec150214c0bea197ddf2665'
 JWT_SECRET_KEY = 'ssdkjnvskjdfnsdngskjdnns4r9034'
 JWT_TOKEN_LOCATION = ['cookies']
-JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(seconds=60000)
+JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(seconds=1200)
 JWT_COOKIE_SECURE = False
 JWT_REFRESH_TOKEN_EXPIRES = datetime.timedelta(days=15)
 JWT_COOKIE_CSRF_PROTECT = False

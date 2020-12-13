@@ -12,9 +12,11 @@ Instalation:
 
 Database setup:
 
+- $ cd factoryworldwide_app/server/
 - $ export FLASK_APP=migrate.py
 - $ flask db init
 - $ flask db migrate
+- $ flask db upgrade
 
 Run application: 
 
@@ -29,6 +31,7 @@ Endpoints:
 - User login: http://127.0.0.1:5000/login [GET, POST]
 - Create recipe: http://127.0.0.1:5000/create-recipe [GET, POST]
 - Get all recipes: http://127.0.0.1:5000/get-recipe [GET]
+- Get recipe by id: http://127.0.0.1:5000/get-recipe/1 [GET]
 - Get user recipes: http://127.0.0.1:5000/get-user-recipe [GET]
 - Get recipes with minimum ingredients: http://127.0.0.1:5000/get-recipe-filter/min [GET]
 - Get recipes with maximum ingredients: http://127.0.0.1:5000/get-recipe-filter/max [GET]

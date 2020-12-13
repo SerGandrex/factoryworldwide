@@ -1,5 +1,7 @@
-from factoryworldwide_app.models.BaseModel import Base
 from factoryworldwide_app.server import db
+from factoryworldwide_app.models.BaseModel import Base
+from factoryworldwide_app.models.RecipeIngredientModel import RecipeIngredient
+from factoryworldwide_app.models.RecipeModel import Recipe
 
 
 class Ingredient(Base):

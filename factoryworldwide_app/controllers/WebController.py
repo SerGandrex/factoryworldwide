@@ -85,7 +85,6 @@ def create_ingredient():
 @jwt_required
 def get_ingredients():
     ingredients = IngredientService.get_most_used_ingredients()
-    print(ingredients)
 
     return render_template('ingredient/ingredients.html', ingredients=ingredients,
                            title='Ingredient')
@@ -95,10 +94,8 @@ def get_ingredients():
 @jwt_required
 def rate_recipe():
     data = request.json
-    print(data)
     data['email'] = get_jwt_identity()
-    print(data['rating'])
-    if data['rating'] in range(1, 6):
+    if data.get('rating').isdigit() and int(data.get('rating')) in range(1, 6):
         RateService.rate_recipe(data)
         return {'status': '200'}
     return {'status': '400'}
