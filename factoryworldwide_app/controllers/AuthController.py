@@ -30,38 +30,47 @@ def my_invalid_token_callback(invalid_token):
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        data = request.form.to_dict()
-        UserService.create_user(data)
-        flash('You have successfully registered! You may now login.')
-        return redirect(url_for('auth.login'))
+    try:
+        form = RegistrationForm()
+        if form.validate_on_submit():
+            data = request.form.to_dict()
+            UserService.create_user(data)
+            flash('You have successfully registered! You may now login.')
+            return redirect(url_for('auth.login'))
 
-    return render_template('auth/register.html', form=form, title='Register')
+        return render_template('auth/register.html', form=form, title='Register')
+    except Exception:
+        return render_template('error/error-page.html', title='Error')
 
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        data = request.form.to_dict()
-        if UserService.login(data):
-            access_token = create_access_token(identity=data['email'])
-            response = make_response(redirect(url_for('web.home')))
-            set_access_cookies(response, access_token)
+    try:
+        form = LoginForm()
+        if form.validate_on_submit():
+            data = request.form.to_dict()
+            if UserService.login(data):
+                access_token = create_access_token(identity=data['email'])
+                response = make_response(redirect(url_for('web.home')))
+                set_access_cookies(response, access_token)
 
-            return response
+                return response
 
-        else:
-            flash('Invalid email or password.')
+            else:
+                flash('Invalid email or password.')
 
-    return render_template('auth/login.html', form=form, title='Login')
+        return render_template('auth/login.html', form=form, title='Login')
+    except Exception:
+        return render_template('error/error-page.html', title='Error')
 
 
 @auth.route('/logout')
 def logout():
-    response = make_response(redirect(url_for('auth.login')))
-    unset_access_cookies(response)
-    # UserService().logout()
-    flash('You have successfully been logged out.')
-    return response
+    try:
+        response = make_response(redirect(url_for('auth.login')))
+        unset_access_cookies(response)
+        # UserService().logout()
+        flash('You have successfully been logged out.')
+        return response
+    except Exception:
+        return render_template('error/error-page.html', title='Error')
